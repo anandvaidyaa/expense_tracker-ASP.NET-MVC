@@ -1,0 +1,158 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["isDashboard"] = true;
+}
+
+
+  <div id="ExpenseAlert">
+   @ViewBag.ExpenseAlert
+  </div>
+<div id="ExpenseLimitAlert">
+    @ViewBag.ExpenseLimitAlert
+</div>
+
+@if (ViewBag.AlertMessage.Count > 0)
+{
+    <div id="alert">
+        <ul>
+        @foreach (string message in ViewBag.AlertMessage)
+        {
+
+            <li>@message</li>
+        }
+        </ul>
+    </div>
+}
+@*Income Expense Total*@
+
+<div class="row mb-3">
+    <div class="col-md-3">
+    <div class="d-flex flex-row widget summary income">
+        <div class="d-flex flex-column justify-content-center p-3">
+                <i class="fa-solid fa-hand-holding-dollar fa-2xl"></i>
+        </div>
+        <div class="d-flex flex-column m-auto py-3">
+            <span class="lead">Total Income</span>
+            <h1 class="display-6 fw-bold">@ViewBag.TotalIncome</h1>
+
+        </div>
+    </div>
+    </div>
+    <div class="col-md-3">
+    <div class="d-flex flex-row widget summary expense">
+        <div class="d-flex flex-column justify-content-center p-3">
+                <i class="fa-solid fa-money-bill-transfer fa-2xl"></i>
+        </div>
+        <div class="d-flex flex-column m-auto py-3">
+            <span class="lead">Total Expense</span>
+            <h1 class="display-6 fw-bold">@ViewBag.TotalExpense</h1>
+
+        </div>
+    </div>
+    </div>
+    <div class="col-md-3">
+    <div class="d-flex flex-row widget summary balance">
+        <div class="d-flex flex-column justify-content-center p-3">
+                <i class="fa-solid fa-vault fa-2xl"></i>
+        </div>
+        <div class="d-flex flex-column m-auto py-3">
+            <span class="lead">Balance</span>
+            <h1 class="display-6 fw-bold">@ViewBag.Balance</h1>
+
+        </div>
+    </div>
+</div>
+    <div class="col-md-3">
+        
+            <div class="d-flex flex-row widget summary expenselimit">
+                <div class="d-flex flex-column justify-content-center p-3">
+                
+                    <i class="fa-solid fa-sack-xmark fa-2xl"></i>
+                
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">Expense Limit</span>
+                <h1 class="display-6 fw-bold" contenteditable="true">@ViewBag.ExpLimit</h1>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+
+@*Piechart*@
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Expense By Category</h5>
+            </div>
+            <ejs-accumulationchart id="piechart" enableSmartLabels="true" background="#2E2E2E">
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@ViewBag.PieRadiusData"
+                                           xName="categoryTitleWithIcon" yName="amount"
+                                           legendShape="Circle">
+                                           
+                        <e-accumulationseries-datalabel name="formattedAmount" visible="true"></e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings position="Top" >
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+        </div>
+    </div>
+
+  @*My Categories*@
+    <div class="col-md-8">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">My Categories</h5>
+                <ejs-grid id="dashboardcategories" dataSource="@ViewBag.MyCategories" allowSorting="true" allowPaging="true">
+                    <e-grid-pagesettings pageSize="8"></e-grid-pagesettings>
+                <e-grid-columns>
+                <e-grid-column headerText="Category" field="TitleWithIcon"></e-grid-column>
+                        <e-grid-column headerText="Category Limit" field="FormattedCategoryLimit"></e-grid-column>
+                <e-grid-column headerText="Type" template="#typeColumnTemplate" width="100px"></e-grid-column>
+                </e-grid-columns>
+        </ejs-grid>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*Recent Transactions*@
+
+<div class="row">
+    <div class="col-md-15">
+        <div class="widget">
+            <div class="p-4">
+                <h5 class="fw-bold">Recent 7 Activities</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="recentactivities" dataSource="@ViewBag.RecentActivity" allowSorting="true">
+                    <e-grid-columns>
+                    <e-grid-column headerText="Category" field="CategoryTitleWithIcon"></e-grid-column>
+                    <e-grid-column headerText="Date" field="Date" width="150px" type="date" format="dd-MMM-yyyy" textAlign="Left"></e-grid-column>
+                    <e-grid-column headerText="Amount" field="FormattedAmount" textAlign="Right" width="110px"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="typeColumnTemplate" type="text/x-template">
+    ${if(Type=="Income")}
+        <span class="badge bg-success">${Type}</span>
+    ${else}
+        <span class="badge bg-danger">${Type}</span>
+    ${/if}
+</script>
+
+
+

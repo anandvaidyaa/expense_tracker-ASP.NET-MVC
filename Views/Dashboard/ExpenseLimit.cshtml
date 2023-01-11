@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Expense_Tracker.Models.Expenses
+
+
+
+<div class="row">
+    <div class="col-md-15">
+        <div class="widget p-5" style="background-color:#1E1E1E">
+            <form asp-action="ExpenseLimit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>                                           
+                <div class="mb-3">
+                    <ejs-numerictextbox id="expenselimit" placeholder="Set Your Expense Limit" ejs-for="ExpenseLimit" format="0" min="0" floatLabelType="Always"></ejs-numerictextbox>
+                    <span asp-validation-for="ExpenseLimit" class="text-danger fs-6"></span>
+                </div>
+                
+                <ejs-button id="submit" type="submit" content="Submit" cssClass="e-success"></ejs-button>
+            </form>
+        </div>
+        <div>
+            <a href="/">
+                <ejs-button id="godashboard" cssClass="e-danger" content="Go Back"></ejs-button>
+            </a>
+        </div>
+
+
+    </div>
+    
+</div>
+
+
+@*@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}*@
