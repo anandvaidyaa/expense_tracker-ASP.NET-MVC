@@ -1,6 +1,5 @@
 # expense_tracker-ASP.NET-MVC
-If you want to preview the application, please use the link provided above to access the google drive.
-https://drive.google.com/file/d/1qaHRL3z0QHz-Lek626MkS1xMkPsU9u8H/view?usp=sharing
+
 
 This Expense Tracker application is a feature-rich web application that has been built using the ASP.NET MVC framework. The user interface of the application is designed using Syncfusion components, which provide a visually appealing and user-friendly experience. The application uses toastr notifications to inform the user of various events and Font Awesome icons to make the interface more intuitive.
 
